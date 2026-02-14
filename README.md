@@ -8,91 +8,97 @@ The primary objective of this repository is not academic learning, but evidence 
 
 Although screenshots or examples may show one specific SIEM in use, every scenario has been repeated and validated across multiple SIEM technologies, including Splunk, ELK, and Microsoft Sentinel.
 
----
-
 ## 🛡️ SOC Responsibilities Demonstrated
 
 This repository reflects real SOC workflows, including:
 
-Alert triage and prioritization
+- Alert triage and prioritization
 
-Phishing investigation and response
+- Phishing investigation and response
 
-Log correlation and root cause analysis
+- Log correlation and root cause analysis
 
-Detection and investigative reasoning
+- Detection and investigative reasoning
 
-Incident response workflows
+- Incident response workflows
 
-Threat hunting fundamentals
+- Threat hunting fundamentals
 
-False positive validation
+- False positive validation
 
-Escalation and reporting
+- Escalation and reporting
 
-🔧 SIEMs & Technologies
+---
+
+## 🔧 SIEMs & Technologies
 
 Hands-on simulations are performed across multiple platforms to demonstrate tool-agnostic SOC competence:
 
 SIEM Platforms:
 
-Splunk
+- Splunk
 
-ELK Stack (Elasticsearch, Logstash, Kibana)
+- ELK Stack (Elasticsearch, Logstash, Kibana)
 
-Microsoft Sentinel
+- Microsoft Sentinel
 
 SOC Simulator Environment:
 
-Native TryHackMe SOC Simulator
+- Native TryHackMe SOC Simulator
 
-Simulated enterprise infrastructure
+- Simulated enterprise infrastructure
 
-Realistic log sources (email, firewall, endpoints, web servers)
+- Realistic log sources (email, firewall, endpoints, web servers)
 
-🧪 SOC Simulator (TryHackMe)
+---
+
+## 🧪 SOC Simulator (TryHackMe)
 
 The SOC Simulator provides an environment where I:
 
-Investigate alerts as a real SOC analyst
+- Investigate alerts as a real SOC analyst
 
-Analyze phishing emails, URLs, and attachments
+- Analyze phishing emails, URLs, and attachments
 
-Correlate logs across multiple data sources
+- Correlate logs across multiple data sources
 
-Identify attacker techniques and behaviors
+- Identify attacker techniques and behaviors
 
-Decide on containment, remediation, or escalation actions
+- Decide on containment, remediation, or escalation actions
 
 This directly demonstrates:
 
-Analytical decision-making
+- Analytical decision-making
 
-Precision in alert handling
+- Precision in alert handling
 
-Time-sensitive investigation skills
+- Time-sensitive investigation skills
 
 Operational readiness for SOC roles
 
-🎯 Purpose of This Repository
+---
+
+## 🎯 Purpose of This Repository
 
 This repository exists to serve as a technical portfolio for SOC roles, showing:
 
-How I approach security problems
+- How I approach security problems
 
-How I document investigations
+- How I document investigations
 
-How I reason about attacker behavior
+- How I reason about attacker behavior
 
-How I validate detections
+- How I validate detections
 
-How I communicate findings clearly
+- How I communicate findings clearly
 
 It is designed to answer the core recruiter question:
 
 "Can this person actually function in a live SOC?"
 
-📌 Data Handling & Masking Notice
+---
+
+## 📌 Data Handling & Masking Notice
 
 Some logs, screenshots, or artifacts may contain masked or partially redacted fields (e.g., missing session IDs, truncated IPs, anonymized user data).
 
