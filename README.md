@@ -1,4 +1,4 @@
-SOC-Simulations
+# SOC-Simulations
 
 This repository demonstrates my practical, hands-on experience in Security Operations Center (SOC) environments, created specifically to showcase real-world skills to recruiters and hiring managers.
 
@@ -8,7 +8,9 @@ The primary objective of this repository is not academic learning, but evidence 
 
 Although screenshots or examples may show one specific SIEM in use, every scenario has been repeated and validated across multiple SIEM technologies, including Splunk, ELK, and Microsoft Sentinel.
 
-🛡️ SOC Responsibilities Demonstrated
+---
+
+## 🛡️ SOC Responsibilities Demonstrated
 
 This repository reflects real SOC workflows, including:
 
