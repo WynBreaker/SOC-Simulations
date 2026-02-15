@@ -7,7 +7,7 @@ For this walkthrough, I used **:contentReference[oaicite:1]{index=1}** as my pri
 
 In the first screenshot:
 
-screenshots/Introduction-to-Phishing/1.png
+![SOC Dashboard](screenshots/Introduction-to-Phishing/1.png)
 
 
 I am presented with the main SOC dashboard, which displays:
