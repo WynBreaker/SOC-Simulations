@@ -23,9 +23,21 @@ The **time elapsed** metric is particularly important, as it reflects a real SOC
 
 On the left-hand side of the interface, I can see several core functionalities:
 
-- **Alert Queue:** Displays all incoming alerts (shown in `2.png`).  
-- **SIEM:** Redirects me to the selected SIEM platform, in this case Splunk (shown in `6.png`).  
-- **Analyst VM:** Provides multiple tools, including the *TryDetectMe* application, which I use to determine whether IPs, URLs, or attachments are malicious or benign (shown in `8.png`).  
+![Alert-Queue](screenshots/Introduction-to-Phishing/2.png) 2.png
+
+- **Alert Queue:** Displays all incoming alerts (shown in `2.png`).
+
+![SIEM](screenshots/Introduction-to-Phishing/6.png) 6.png
+
+- **SIEM:** Redirects me to the selected SIEM platform, in this case Splunk (shown in `6.png`).
+
+![Analyst-VM](screenshots/Introduction-to-Phishing/8.png) 8.png
+  
+- **Analyst VM:** Provides multiple tools, including the *TryDetectMe* application, which I use to determine whether IPs, URLs, or attachments are malicious or benign (shown in `8.png`).
+
+![Doc-1](screenshots/Introduction-to-Phishing/8.png) 1.1.png
+![Doc-2](screenshots/Introduction-to-Phishing/8.png) 1.2.png
+
 - **Documentation:** Acts as a built-in guide for analysts, explaining how to triage alerts and score them correctly.  
   It also includes:
   - **Company Information:** Adds context by linking IP addresses to internal hosts for better reporting.  
