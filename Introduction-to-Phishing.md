@@ -35,15 +35,18 @@ On the left-hand side of the interface, I can see several core functionalities:
   
 - **Analyst VM:** Provides multiple tools, including the *TryDetectMe* application, which I use to determine whether IPs, URLs, or attachments are malicious or benign (shown in `8.png`).
 
-![Doc-1](screenshots/Introduction-to-Phishing/8.png) 1.1.png
-![Doc-2](screenshots/Introduction-to-Phishing/8.png) 1.2.png
+![Doc-1](screenshots/Introduction-to-Phishing/1.1.png) 1.1.png
+![Doc-2](screenshots/Introduction-to-Phishing/1.2.png) 1.2.png
 
 - **Documentation:** Acts as a built-in guide for analysts, explaining how to triage alerts and score them correctly.  
   It also includes:
   - **Company Information:** Adds context by linking IP addresses to internal hosts for better reporting.  
-  - **Asset Inventory:** Shows the company subnet, in this case `10.20.2.0/24`, meaning there are 254 hosts on the network (shown in `1.1.png` and `1.2.png`).  
+  - **Asset Inventory:** Shows the company subnet, in this case `10.20.2.0/24`, meaning there are 254 hosts on the network (shown in `1.1.png` and `1.2.png`).
+
+![PlayBook](screenshots/Introduction-to-Phishing/5.png) 5.png
+  
 - **Playbooks:** Two playbooks are available in this scenario, but only one was required — the **Phishing Playbook**.  
   This outlines the exact steps I need to follow to ensure consistent investigation and response procedures (shown in `5.png`).  
   Although I was unable to expand the playbook in the interface for some reason, I already understood the required workflow.
 
-This scenario mainly serves as a baseline to understand how the SOC Simulator works before moving into more complex phishing investigations.
+This section mainly serves as a baseline to understand how the SOC Simulator works before moving into the core of the scenario.
