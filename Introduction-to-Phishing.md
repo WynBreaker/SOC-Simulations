@@ -1,9 +1,9 @@
 ## Scenario 1: Introduction to Phishing
 
-This is my first simulation using the **SOC Simulator on :contentReference[oaicite:0]{index=0}**, so I begin by exploring the available functionalities within the platform.  
+This is my first simulation using the **SOC Simulator on TryhackMe**, so I begin by exploring the available functionalities within the platform.  
 All subsequent scenarios will focus purely on investigation and analysis and will not include this general overview section.
 
-For this walkthrough, I used **:contentReference[oaicite:1]{index=1}** as my primary SIEM. After completing this room, I also repeated the same scenario using **ELK** and **Microsoft Sentinel**. The overall workflow is largely the same, with the main differences being the **query language** and how logs are filtered and visualized.
+For this walkthrough, I used **Splunk** as my primary SIEM. After completing this room, I also repeated the same scenario using **ELK** and **Microsoft Sentinel**. The overall workflow is largely the same, with the main differences being the **query language** and how logs are filtered and visualized.
 
 In the first screenshot:
 
