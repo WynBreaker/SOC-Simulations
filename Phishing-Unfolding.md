@@ -1,7 +1,7 @@
 ## Scenario 2: Phishing Unfolding
 
-This is the second SOC simulation I completed using the **SOC Simulator on :contentReference[oaicite:0]{index=0}>**.  
-For this scenario, I primarily used **:contentReference[oaicite:1]{index=1}>**, although the simulation was later repeated using **ELK** and **Microsoft Sentinel**.
+This is the second SOC simulation I completed using the **SOC Simulator on TryHackMe**.  
+For this scenario, I primarily used **Splunk SIEM**, although the simulation was later repeated using **ELK** and **Microsoft Sentinel**.
 
 One key observation during setup was that log ingestion and data availability in **Splunk** and **ELK** occurred significantly faster compared to **Microsoft Sentinel**.
 
