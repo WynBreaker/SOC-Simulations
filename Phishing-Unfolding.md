@@ -126,4 +126,135 @@ Given the absence of malicious behavior, unusual spawning activity, or lateral m
 
 ---
 
+### Alert 4 – Phishing Email (No Attachments or Links)
+
+While investigating the previous alert, two more low-severity alerts accumulated in the queue. Following SOC best practices, I selected the **oldest alert first**.
+
+![Phishing Email – No Links](screenshots/Phishing-Unfolding/7.png)
+
+*Figure 13 – Phishing email alert without attachments or external links.*
+
+This alert was similar to the earlier spam-style phishing attempt. The email contained no attachments and no external URLs.
+
+I pivoted to the SIEM to check for:
+
+- Any user replies  
+- Any outbound communication  
+- Any abnormal activity from the recipient  
+
+![SIEM Search – No User Interaction](screenshots/Phishing-Unfolding/7.1.png)
+
+*Figure 14 – SIEM results showing no user interaction.*
+
+After waiting briefly to ensure no delayed activity appeared, I confirmed there was no interaction. I classified the alert as a **False Positive** and documented my findings.
+
+![False Positive Report – Phishing Email](screenshots/Phishing-Unfolding/7.2.png)
+
+*Figure 15 – Case report marking the alert as False Positive.*
+
+---
+
+### Alert 5 – Additional Phishing Email (No Malicious Indicators)
+
+By this stage, approximately four low-severity alerts were waiting in the queue. Again, I selected the oldest alert.
+
+![Additional Phishing Alert](screenshots/Phishing-Unfolding/8.png)
+
+*Figure 16 – Another phishing email alert.*
+
+I repeated the same structured investigation process:
+
+1. Reviewed alert details  
+2. Queried the SIEM  
+3. Checked for user interaction  
+4. Verified presence of attachments or links  
+
+![SIEM Investigation – Clean Results](screenshots/Phishing-Unfolding/8.1.png)
+
+*Figure 17 – SIEM search confirming no malicious activity.*
+
+There were no malicious links, no attachments, and no user interaction. I documented the findings and marked it as a **False Positive**.
+
+![False Positive Report – Second Phishing Email](screenshots/Phishing-Unfolding/8.2.png)
+
+*Figure 18 – Case report confirming False Positive classification.*
+
+---
+
+### Alert 6 – Phishing Email with Malicious Attachment (Host: win-3450)
+
+After closing the previous alert, the number of pending alerts remained unchanged. I moved to the next oldest alert, which involved a phishing email sent to **host win-3450** that contained an attachment — this immediately raised the risk level.
+
+I began by searching for related logs in the SIEM.
+
+![Attachment Email – SIEM Search](screenshots/Phishing-Unfolding/10.1.png)
+
+*Figure 19 – SIEM query for email containing attachment.*
+
+While waiting for logs to accumulate, I analyzed the attachment using the Analyst VM.
+
+The ZIP archive itself appeared clean. However, the file inside the archive — `invoice.pdf.lnk` — was flagged as malicious.
+
+![ZIP File Scan Result](screenshots/Phishing-Unfolding/10.2.png)
+
+*Figure 20 – ZIP file scan result (clean).*
+
+![Malicious LNK File Result](screenshots/Phishing-Unfolding/10.3.png)
+
+*Figure 21 – Embedded LNK file flagged as malicious.*
+
+This indicated a clear malicious delivery mechanism using a disguised shortcut file.
+
+---
+
+### Alert 7 – Suspicious Process (rdpclip.exe)
+
+While waiting for additional correlated logs, I proceeded to the next alert in the queue, which was also associated with host **win-3450**.
+
+![Suspicious rdpclip.exe Alert](screenshots/Phishing-Unfolding/9.png)
+
+*Figure 22 – Alert showing rdpclip.exe spawned from svchost.exe.*
+
+The process `rdpclip.exe` is related to Remote Desktop Protocol (RDP), so I approached this investigation cautiously due to its potential use in lateral movement.
+
+I queried the SIEM to review the process lineage and surrounding activity.
+
+![rdpclip.exe Log Analysis](screenshots/Phishing-Unfolding/9.1.png)
+
+*Figure 23 – Process lineage investigation in SIEM.*
+
+There was no suspicious user interaction prior to the process spawn. Additionally, `rdpclip.exe` was spawned from the expected parent process (`svchost.exe`), which is consistent with legitimate Windows behavior.
+
+Based on these findings, I classified this alert as a **False Positive**.
+
+![False Positive Report – rdpclip.exe](screenshots/Phishing-Unfolding/9.2.png)
+
+*Figure 24 – Case report marking rdpclip.exe alert as False Positive.*
+
+---
+
+### Alert 8 – taskhostw.exe (KEYROAMING) Process
+
+The next alert involved `taskhostw.exe` with a `KEYROAMING` process spawned from `svchost.exe`.
+
+![taskhostw.exe Alert](screenshots/Phishing-Unfolding/11.png)
+
+*Figure 25 – taskhostw.exe KEYROAMING process alert.*
+
+Although this appeared to be normal Windows activity at first glance, I validated it in the SIEM to maintain investigative discipline.
+
+![taskhostw.exe SIEM Investigation](screenshots/Phishing-Unfolding/11.1.png)
+
+*Figure 26 – SIEM validation of taskhostw.exe activity.*
+
+The logs confirmed normal system behavior with no suspicious parent-child process anomalies.
+
+I documented the findings and marked the alert as a **False Positive**.
+
+![False Positive Report – taskhostw.exe](screenshots/Phishing-Unfolding/11.2.png)
+
+*Figure 27 – Case report confirming False Positive classification.*
+
+---
+
 *(To be continued in the next section.)*
