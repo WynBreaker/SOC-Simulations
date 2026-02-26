@@ -257,4 +257,82 @@ I documented the findings and marked the alert as a **False Positive**.
 
 ---
 
+### Alert 9 – Suspicious Process (WUDFHost.exe)
+
+By this point, there were approximately six alerts waiting in the queue, all still marked as **Low Severity**. Following SOC queue management best practices, I selected the oldest alert.
+
+![WUDFHost.exe Alert](screenshots/Phishing-Unfolding/12.png)
+
+*Figure 28 – Alert indicating WUDFHost.exe spawned from services.exe.*
+
+The alert indicated that `WUDFHost.exe` was spawned from `services.exe`. At first glance, this appeared legitimate, as `WUDFHost.exe` (Windows Driver Foundation Host) commonly runs under `services.exe`.
+
+To ensure there was no misuse, I performed deeper log analysis in the SIEM.
+
+![WUDFHost.exe Log Analysis](screenshots/Phishing-Unfolding/12.1.png)
+
+*Figure 29 – Process command-line and event log analysis.*
+
+I carefully reviewed the process command string and surrounding activity to confirm:
+
+- No suspicious child processes were spawned  
+- No abnormal command-line arguments were used  
+- No unusual outbound network connections were initiated  
+
+Everything aligned with expected system behavior. Based on these findings, I documented the case and marked the alert as a **False Positive**.
+
+![False Positive Report – WUDFHost.exe](screenshots/Phishing-Unfolding/12.2.png)
+
+*Figure 30 – Case report confirming False Positive classification.*
+
+---
+
+### Alert 10 – Suspicious Process (rdpclip.exe)
+
+The next alert involved `rdpclip.exe` spawned from `svchost.exe`, similar to a previous alert I had already investigated.
+
+![rdpclip.exe Alert](screenshots/Phishing-Unfolding/13.png)
+
+*Figure 31 – rdpclip.exe process alert.*
+
+Given the similarity to the earlier case, I anticipated the outcome but still conducted a quick validation in the SIEM to maintain investigative consistency.
+
+![rdpclip.exe Log Check](screenshots/Phishing-Unfolding/13.1.png)
+
+*Figure 32 – SIEM validation of rdpclip.exe process activity.*
+
+The logs confirmed normal behavior with no suspicious activity, lateral movement, or anomalous process spawning.
+
+I documented the findings and marked the alert as a **False Positive**.
+
+![False Positive Report – rdpclip.exe](screenshots/Phishing-Unfolding/13.2.png)
+
+*Figure 33 – Case report confirming False Positive classification.*
+
+---
+
+### Alert 11 – Suspicious Process (WUDFHost.exe – Same Host)
+
+The next alert was again related to `WUDFHost.exe` spawned from `services.exe`, similar to Alert 9 and originating from the same host.
+
+![WUDFHost.exe Repeat Alert](screenshots/Phishing-Unfolding/14.png)
+
+*Figure 34 – Repeated WUDFHost.exe process alert.*
+
+Since this pattern had already been validated, I conducted a quick SIEM verification to confirm consistency.
+
+![WUDFHost.exe Log Check](screenshots/Phishing-Unfolding/14.1.png)
+
+*Figure 35 – Log validation for repeated WUDFHost.exe alert.*
+
+The logs showed expected Windows system behavior with no suspicious command-line arguments or child processes.
+
+I completed the case documentation and classified the alert as a **False Positive**.
+
+![False Positive Report – WUDFHost.exe Repeat](screenshots/Phishing-Unfolding/14.2.png)
+
+*Figure 36 – Case report marking the alert as False Positive.*
+
+---
+
 *(To be continued in the next section.)*
