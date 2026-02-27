@@ -335,4 +335,99 @@ I completed the case documentation and classified the alert as a **False Positiv
 
 ---
 
+### Alert 12 – Phishing Email (Spam Pattern)
+
+The next alert was another phishing email alert. However, unlike the earlier `invoice.pdf.lnk` case, this email contained no attachments or embedded malicious links and followed the same pattern as the previously identified false positive spam emails.
+
+![Phishing Email – Spam Pattern](screenshots/Phishing-Unfolding/15.png)
+
+*Figure 37 – Phishing alert resembling previous spam-style emails.*
+
+Based on prior investigations, I was able to triage this alert efficiently. I still validated my assumption by checking the SIEM logs.
+
+![SIEM Validation – No Malicious Activity](screenshots/Phishing-Unfolding/15.1.png)
+
+*Figure 38 – Log review confirming no malicious interaction.*
+
+There were no user replies, no attachments, and no suspicious outbound connections. I documented the findings and classified the alert as a **False Positive**, noting that the pattern resembled spam rather than a targeted phishing attempt.
+
+It is important to note that at this stage, there were still no new correlated alerts related to the `invoice.pdf.lnk` attachment. While waiting for additional logs or activity, I proceeded to the next alert.
+
+---
+
+### Alert 13 – Additional Phishing Email (Spam)
+
+The following alert was again a phishing email with characteristics similar to earlier false positives.
+
+![Repeated Phishing Alert](screenshots/Phishing-Unfolding/15.png)
+
+*Figure 39 – Additional phishing email alert showing spam characteristics.*
+
+I performed a quick SIEM validation following the same structured triage process used in previous phishing investigations.
+
+![Log Review – No Indicators](screenshots/Phishing-Unfolding/15.1.png)
+
+*Figure 40 – Log analysis confirming no malicious indicators.*
+
+After confirming there were no attachments, malicious URLs, or user interaction, I wrote a **False Positive** case report.
+
+![False Positive Report – Phishing Email](screenshots/Phishing-Unfolding/15.2.png)
+
+*Figure 41 – Case report confirming False Positive classification.*
+
+---
+
+### Alert 14 – Suspicious svchost.exe Command-Line Activity
+
+Although new alerts had arrived in the queue, they were still marked as **Low Severity**, so I selected the oldest one.
+
+![svchost.exe Command Alert](screenshots/Phishing-Unfolding/16.png)
+
+*Figure 42 – Suspicious command-line activity involving svchost.exe.*
+
+I was initially unsure about the command-line parameters being executed by `svchost.exe`, so I investigated further in the SIEM.
+
+![Command-Line Log Investigation](screenshots/Phishing-Unfolding/16.1.png)
+
+*Figure 43 – SIEM log analysis of svchost.exe command string.*
+
+I examined:
+
+- Process lineage  
+- Child processes  
+- Network connections  
+- Abnormal arguments  
+
+There were no suspicious child processes spawned and no anomalous network connections. To ensure due diligence, I conducted a brief external verification of the command-line behavior to confirm it aligned with legitimate Windows operations.
+
+After validation, I documented the findings and classified the alert as a **False Positive**.
+
+![False Positive Report – svchost.exe](screenshots/Phishing-Unfolding/16.2.png)
+
+*Figure 44 – Case report marking svchost.exe alert as False Positive.*
+
+---
+
+### Alert 15 – Phishing Email (Repeated Spam Pattern)
+
+At this point, approximately eight low-severity alerts remained in the queue. As before, I selected the oldest alert.
+
+![Phishing Email Alert](screenshots/Phishing-Unfolding/17.png)
+
+*Figure 45 – Additional phishing email alert.*
+
+The email displayed the same spam-like characteristics as earlier false positives. I performed a quick SIEM validation.
+
+![SIEM Check – No Suspicious Activity](screenshots/Phishing-Unfolding/17.1.png)
+
+*Figure 46 – Log validation confirming no malicious interaction.*
+
+There were no malicious indicators or user engagement. I documented the case and classified it as a **False Positive**.
+
+![False Positive Report – Phishing Email](screenshots/Phishing-Unfolding/17.2.png)
+
+*Figure 47 – Case report confirming False Positive classification.*
+
+---
+
 *(To be continued in the next section.)*
