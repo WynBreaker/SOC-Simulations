@@ -430,4 +430,158 @@ There were no malicious indicators or user engagement. I documented the case and
 
 ---
 
+### Alert 16 – Phishing Email (Spam Pattern)
+
+The next alert was another phishing email displaying the same characteristics as the previous spam-style false positives.
+
+![Phishing Email – Spam](screenshots/Phishing-Unfolding/18.png)
+
+*Figure 48 – Phishing email alert resembling previous spam patterns.*
+
+I followed the same triage workflow:
+
+- Reviewed alert details  
+- Checked for attachments or URLs  
+- Queried SIEM for user interaction  
+- Monitored for outbound connections  
+
+![SIEM Validation – No Indicators](screenshots/Phishing-Unfolding/18.1.png)
+
+*Figure 49 – SIEM log review confirming no malicious activity.*
+
+There were no malicious indicators or user engagement. I documented the findings and marked the alert as a **False Positive**.
+
+![False Positive Report – Phishing](screenshots/Phishing-Unfolding/18.2.png)
+
+*Figure 50 – Case report confirming False Positive classification.*
+
+---
+
+### Alert 17 – Suspicious Process (TrustedInstaller.exe)
+
+The next alert involved `services.exe` executing `TrustedInstaller.exe`, expedited from Sysmon.
+
+![TrustedInstaller Alert](screenshots/Phishing-Unfolding/19.png)
+
+*Figure 51 – services.exe spawning TrustedInstaller.exe.*
+
+Attackers often attempt to masquerade as legitimate Windows processes, and `TrustedInstaller.exe` is a high-privilege system process. Therefore, I investigated thoroughly.
+
+I analyzed the logs both before and after the process execution.
+
+![TrustedInstaller Log Analysis](screenshots/Phishing-Unfolding/19.1.png)
+
+*Figure 52 – SIEM investigation of TrustedInstaller activity.*
+
+I reviewed:
+
+- Parent-child process relationships  
+- Command-line arguments  
+- Subsequent spawned processes  
+- Network connections  
+
+There were no suspicious indicators. The process originated from a legitimate parent and behaved as expected.
+
+I documented the findings and marked the alert as a **False Positive**.
+
+![False Positive Report – TrustedInstaller](screenshots/Phishing-Unfolding/19.2.png)
+
+*Figure 53 – Case report confirming False Positive classification.*
+
+---
+
+### Alert 18 – Suspicious Process (taskhostw.exe – NGCKeyPregen)
+
+The following alert involved `taskhostw.exe`, but instead of the `KEYROAMING` command-line parameter seen earlier, it used `NGCKeyPregen`.
+
+![taskhostw.exe NGCKeyPregen Alert](screenshots/Phishing-Unfolding/20.png)
+
+*Figure 54 – taskhostw.exe with NGCKeyPregen command line.*
+
+From prior knowledge, I recognized `NGCKeyPregen` as legitimate Windows functionality related to credential services. Nevertheless, I validated it in the SIEM.
+
+![NGCKeyPregen Log Validation](screenshots/Phishing-Unfolding/20.1.png)
+
+*Figure 55 – SIEM log investigation of taskhostw.exe.*
+
+I checked for:
+
+- Abnormal process lineage  
+- Suspicious child processes  
+- Network anomalies  
+
+Everything aligned with legitimate system behavior. I wrote a **False Positive** case report.
+
+![False Positive Report – NGCKeyPregen](screenshots/Phishing-Unfolding/20.2.png)
+
+*Figure 56 – Case report marking alert as False Positive.*
+
+---
+
+### Alert 19 – Phishing Email (Spam Pattern)
+
+The next alert was another phishing email with the same spam-like characteristics as earlier alerts.
+
+![Phishing Email Alert](screenshots/Phishing-Unfolding/21.png)
+
+*Figure 57 – Phishing email resembling earlier false positives.*
+
+I performed a quick triage following the established workflow.
+
+![SIEM Log Review](screenshots/Phishing-Unfolding/21.1.png)
+
+*Figure 58 – Log validation confirming no suspicious activity.*
+
+There were no attachments, malicious links, or user interactions. I classified the alert as a **False Positive**.
+
+![False Positive Report – Phishing](screenshots/Phishing-Unfolding/21.2.png)
+
+*Figure 59 – Case report confirming False Positive classification.*
+
+---
+
+### Alert 20 – Medium Severity: Suspicious Network Share Mapping
+
+At this point, new alerts appeared in the queue marked as **Medium Severity**. Following prioritization best practices, I immediately took ownership of the oldest medium-severity alert.
+
+![Medium Severity Alert – Network Share](screenshots/Phishing-Unfolding/26.png)
+
+*Figure 60 – Network share mapped to local drive (SSF-Financial-Records).*
+
+The alert indicated that a network share named **"SSF-Financial-Records"** was mapped to a local drive. While this could be legitimate, I noticed the host matched the one that previously received the malicious `invoice.pdf.lnk` attachment.
+
+I investigated the logs surrounding the suspicious process.
+
+![Exfiltration Folder Discovery](screenshots/Phishing-Unfolding/26.1.png)
+
+*Figure 61 – Discovery of suspicious "exfiltration" folder.*
+
+Immediately, I observed a folder named **exfiltration**, which significantly increased suspicion. Scrolling further down the logs revealed that `PowerView.ps1` — a known post-exploitation reconnaissance tool — had been downloaded and executed.
+
+![PowerView.ps1 Execution](screenshots/Phishing-Unfolding/24.2.png)
+
+*Figure 62 – PowerView.ps1 downloaded and executed.*
+
+At this stage, I was able to correlate the activity back to the earlier phishing email containing `invoice.pdf.lnk`. The logs confirmed that the user had indeed interacted with the malicious attachment.
+
+This changed the investigative posture entirely.
+
+I immediately:
+
+- Marked the medium-severity execution alert as a **True Positive – Escalation Required**  
+- Reopened and updated the previously investigated phishing alert containing `invoice.pdf.lnk`  
+- Marked it as **True Positive – Escalation Required**  
+
+![Escalation Report – Network Share Execution](screenshots/Phishing-Unfolding/26.2.png)
+
+*Figure 63 – Escalation report for suspicious execution.*
+
+![Escalation Report – Malicious Attachment](screenshots/Phishing-Unfolding/10.4.png)
+
+*Figure 64 – Updated report for invoice.pdf.lnk phishing alert.*
+
+This marked the first confirmed compromise in the scenario and demonstrated the importance of correlating seemingly isolated low-severity alerts with later higher-severity activity.
+
+---
+
 *(To be continued in the next section.)*
