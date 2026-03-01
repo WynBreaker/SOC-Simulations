@@ -594,7 +594,6 @@ Another **Medium Severity** alert appeared in the queue. Following SOC prioritiz
 
 This alert was a continuation of the earlier compromise. The attacker used: net use Z: /delete
 
-
 This indicates the network share was removed after files were likely accessed or copied.
 
 Since malicious activity on the host had already been confirmed, I performed a quick validation in the logs.
@@ -621,12 +620,9 @@ Shortly after, multiple **High Severity** alerts appeared in the queue. Per SOC 
 
 *Figure 68 – High severity suspicious process alerts.*
 
-Across Figures 29.png through 38.png, the alerts showed repeated executions of: nslookup
+Across Figures 29.png through 38.png, the alerts showed repeated executions of: nslookup targeting suspicious domains.
 
-
-targeting suspicious domains.
-
-Given the previously confirmed compromise, this strongly indicated **DNS-based data exfiltration** — a common attacker technique for bypassing traditional firewall controls.
+Given the confirmed compromise earlier in the investigation, this strongly indicated **DNS-based data exfiltration**.
 
 I validated this by reviewing the logs:
 
@@ -637,49 +633,44 @@ I validated this by reviewing the logs:
 
 *Figures 69–72 – Logs confirming suspicious DNS queries to malicious domains.*
 
-The logs showed:
+The logs demonstrated:
 
 - Repeated `nslookup` executions  
-- Encoded or unusual subdomain patterns  
-- Queries to suspicious external domains  
-- Activity consistent with staged data exfiltration  
+- Suspicious and encoded subdomains  
+- Queries to external malicious domains  
+- Behavior consistent with staged data exfiltration  
 
-This confirmed the attacker had progressed from:
+I submitted **True Positive – Escalation Required** case reports for each high-severity alert. The corresponding case report screenshots are linked below:
 
-1. Initial phishing compromise  
-2. Execution of malicious `.lnk` payload  
-3. Post-exploitation tooling (`PowerView.ps1`)  
-4. Network share access  
-5. Cleanup actions  
-6. DNS-based data exfiltration  
+- ![Case Report – Alert 22](screenshots/Phishing-Unfolding/29.4.png)  
+- ![Case Report – Alert 23](screenshots/Phishing-Unfolding/30.1.png)  
+- ![Case Report – Alert 24](screenshots/Phishing-Unfolding/31.2.png)  
+- ![Case Report – Alert 25](screenshots/Phishing-Unfolding/32.1.png)  
+- ![Case Report – Alert 26](screenshots/Phishing-Unfolding/33.1.png)  
+- ![Case Report – Alert 27](screenshots/Phishing-Unfolding/34.1.png)  
+- ![Case Report – Alert 28](screenshots/Phishing-Unfolding/35.1.png)  
+- ![Case Report – Alert 29](screenshots/Phishing-Unfolding/36.1.png)  
+- ![Case Report – Alert 30](screenshots/Phishing-Unfolding/37.1.png)  
+- ![Case Report – Alert 31](screenshots/Phishing-Unfolding/38.1.png)  
 
-I marked **all related High Severity alerts** as:
-
-**True Positive – Escalation Required**
-
-Case reports were submitted for each alert as shown in:
-
-- 29.4.png  
-- 30.1.png  
-- 31.2.png  
-- 32.1.png  
-- 33.1.png  
-- 34.1.png  
-- 35.1.png  
-- 36.1.png  
-- 37.1.png  
-- 38.1.png  
-
-These reports documented:
+Each report documented:
 
 - Confirmed DNS exfiltration activity  
-- Correlation with earlier phishing compromise  
-- Evidence of attacker persistence and data theft  
+- Correlation with the original phishing compromise (`invoice.pdf.lnk`)  
+- Evidence of attacker progression through the kill chain  
 - Immediate escalation to Incident Response  
 
 ---
 
-This phase clearly demonstrated full attack-chain progression from initial access to data exfiltration, reinforcing the importance of correlating alerts rather than treating them in isolation.
+This stage confirmed full attack lifecycle progression:
+
+1. Initial phishing compromise  
+2. Payload execution  
+3. Post-exploitation activity  
+4. Network share access  
+5. Cleanup actions  
+6. DNS-based data exfiltration  
+
+This reinforces the importance of correlating alerts across severity levels to uncover the complete intrusion timeline.
 
 *(To be continued.)*
-
