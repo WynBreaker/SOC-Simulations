@@ -673,4 +673,218 @@ This stage confirmed full attack lifecycle progression:
 
 This reinforces the importance of correlating alerts across severity levels to uncover the complete intrusion timeline.
 
-*(To be continued.)*
+---
+
+### Alert 32 – Low Severity: Phishing Email (Spam)
+
+Before proceeding further with medium alerts, I returned to the remaining low-severity alerts.
+
+As shown in 22.png, this was another spam-style phishing alert with no external links or attachments.
+
+![Spam Email Alert](screenshots/Phishing-Unfolding/22.png)
+
+*Figure 73 – Low severity spam email alert.*
+
+Following the established triage process:
+
+- Reviewed email headers and content  
+- Checked for attachments or embedded links  
+- Queried SIEM for user interaction  
+- Monitored for outbound connections  
+
+![Log Review – No Malicious Activity](screenshots/Phishing-Unfolding/22.1.png)
+
+No malicious indicators were identified. The alert was classified as a **False Positive**.
+
+![False Positive Report – Spam Email](screenshots/Phishing-Unfolding/22.2.png)
+
+---
+
+### Alert 33 – Low Severity: taskhostw.exe (KEYROAMING)
+
+The next alert involved `taskhostw.exe` with the `KEYROAMING` parameter (23.png).
+
+Although this process had previously been determined legitimate, the host involved was **win-3450**, which had confirmed malicious activity. Therefore, validation was necessary.
+
+![KEYROAMING Alert](screenshots/Phishing-Unfolding/23.png)
+
+I reviewed the logs carefully.
+
+![KEYROAMING Log Review](screenshots/Phishing-Unfolding/23.1.png)
+
+No suspicious child processes or abnormal network activity were observed. The process behavior aligned with normal Windows functionality.
+
+The alert was marked as a **False Positive**.
+
+![False Positive Report – KEYROAMING](screenshots/Phishing-Unfolding/23.2.png)
+
+---
+
+### Alert 34 – Suspicious PowerShell File (PowerView.ps1)
+
+The next alert (24.png) had already been partially investigated during earlier medium/high severity analysis.
+
+![PowerView Alert](screenshots/Phishing-Unfolding/24.png)
+
+The alert referenced a suspicious PowerShell file located in the **Downloads** folder — specifically `PowerView.ps1`, a known post-exploitation reconnaissance tool.
+
+I located the relevant logs.
+
+![PowerView Execution Logs](screenshots/Phishing-Unfolding/24.2.png)
+
+The logs confirmed:
+
+- File download  
+- Execution of `PowerView.ps1`  
+- Activity aligned with attacker reconnaissance  
+
+This was clearly malicious.
+
+The alert was marked as:
+
+**True Positive – Escalation Required**
+
+![True Positive Report – PowerView](screenshots/Phishing-Unfolding/24.3.png)
+
+---
+
+### Alert 35 – Low Severity: taskhostw.exe (KEYROAMING)
+
+Another `taskhostw.exe` with `KEYROAMING` alert appeared (25.png).  
+
+Given the compromised state of **win-3450**, I validated the logs again.
+
+![KEYROAMING Alert](screenshots/Phishing-Unfolding/25.png)
+
+![KEYROAMING Log Review](screenshots/Phishing-Unfolding/25.1.png)
+
+No suspicious activity was observed. This instance behaved normally.
+
+The alert was marked as a **False Positive**.
+
+![False Positive Report – KEYROAMING](screenshots/Phishing-Unfolding/25.2.png)
+
+---
+
+### Alert 36 – Suspicious Robocopy Usage (Data Staging)
+
+As shown in 27.png, the next alert involved the `Robocopy` utility being executed within the **exfiltration** folder on compromised host **win-3450**.
+
+![Robocopy Alert](screenshots/Phishing-Unfolding/27.png)
+
+Robocopy is a legitimate Windows tool but is frequently abused by attackers for data staging and bulk file transfer.
+
+I reviewed the logs:
+
+![Robocopy Log Analysis](screenshots/Phishing-Unfolding/27.1.png)
+
+The logs showed:
+
+- Robocopy copying sensitive files  
+- Source: mapped network share  
+- Destination: exfiltration folder  
+
+This directly aligned with previously confirmed malicious activity.
+
+The alert was classified as:
+
+**True Positive – Escalation Required**
+
+![True Positive Report – Robocopy](screenshots/Phishing-Unfolding/27.2.png)
+
+---
+
+> Normally, the SOC simulator ends once all True Positives are identified.  
+> However, for completeness, the final alert was also analyzed.
+
+---
+
+### Alert 37 – Final Low Severity: Spam Email
+
+The final alert (39.png) was another spam-style phishing email.
+
+![Spam Email Alert](screenshots/Phishing-Unfolding/39.png)
+
+Quick triage confirmed no malicious links, attachments, or user interaction.
+
+![Log Review – Spam Email](screenshots/Phishing-Unfolding/39.1.png)
+
+The alert was marked as a **False Positive**.
+
+![False Positive Report – Spam Email](screenshots/Phishing-Unfolding/39.2.png)
+
+---
+
+## Asset Context: Host win-3450
+
+Reviewing the asset inventory revealed that **win-3450** belonged to the **CEO**.
+
+This significantly increases the impact and severity of the incident:
+
+- High-value target  
+- Access to financial and strategic data  
+- Increased reputational and regulatory risk  
+- Elevated risk of data exfiltration and lateral movement  
+
+---
+
+# Lessons Learned
+
+### 1. Correlation Across Severity Levels Is Critical
+Low-severity alerts may initially appear benign but can form part of a larger attack chain when correlated with medium and high-severity events.
+
+### 2. Never Assume Repeated Alerts Are Always False Positives
+Even commonly benign processes (`taskhostw.exe`, `TrustedInstaller.exe`) must be re-validated when observed on a compromised host.
+
+### 3. Phishing Remains a Primary Initial Access Vector
+The `invoice.pdf.lnk` attachment served as the entry point, leading to:
+
+- PowerShell-based reconnaissance (`PowerView.ps1`)  
+- Network share mapping  
+- Data staging via Robocopy  
+- DNS-based exfiltration  
+
+### 4. Living-off-the-Land Binaries (LOLBins)
+Legitimate tools abused in this attack:
+
+- PowerShell  
+- Robocopy  
+- nslookup  
+- net use  
+
+Detection strategies must account for behavioral patterns, not just tool names.
+
+### 5. DNS Monitoring Is Essential
+DNS-based exfiltration can bypass traditional perimeter controls. Monitoring for:
+
+- High-frequency queries  
+- Encoded subdomains  
+- Unusual external domains  
+
+is critical.
+
+### 6. Executive Endpoint Protection Must Be Hardened
+Since the compromised asset belonged to the CEO:
+
+- Enhanced monitoring should be applied to executive devices  
+- Additional EDR policies may be warranted  
+- User awareness training should be reinforced  
+
+---
+
+## Final Summary
+
+This simulation demonstrated a full attack lifecycle:
+
+1. Phishing delivery  
+2. User interaction with malicious `.lnk` file  
+3. PowerShell post-exploitation  
+4. Network share access  
+5. Data staging via Robocopy  
+6. Cleanup actions  
+7. DNS-based data exfiltration  
+
+Through proper prioritization, validation, and correlation, all True Positives were successfully identified and escalated.
+
+---
+
